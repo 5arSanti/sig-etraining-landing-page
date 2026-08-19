@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { SIG_TOPICS } from './sig.manifest';
+import { SIG_LOBBY_INTRO, SIG_TOPICS } from './sig.manifest';
 
 describe('SIG_TOPICS', () => {
   it('lists seven topics with five ready and two placeholders', () => {
@@ -19,5 +19,12 @@ describe('SIG_TOPICS', () => {
     expect(SIG_TOPICS[0]?.sipocRows).toHaveLength(3);
     expect(SIG_TOPICS[1]?.kind).toBe('pdf');
     expect(SIG_TOPICS[4]?.kind).toBe('xlsx');
+  });
+});
+
+describe('SIG_LOBBY_INTRO', () => {
+  it('has meaningful content', () => {
+    expect(SIG_LOBBY_INTRO.length).toBeGreaterThan(40);
+    expect(SIG_LOBBY_INTRO).toContain('SIG');
   });
 });

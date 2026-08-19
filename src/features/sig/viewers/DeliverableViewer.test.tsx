@@ -1,5 +1,5 @@
 import { render, screen, waitFor } from '@testing-library/react';
-import { describe, expect, it, vi, beforeEach, afterEach } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 import type { SigTopic } from '@/content/sig.manifest';
 import { DeliverableViewer } from './DeliverableViewer';
 

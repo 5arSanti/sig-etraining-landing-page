@@ -116,3 +116,6 @@ export const SIG_TOPICS: readonly SigTopic[] = [
     files: [],
   },
 ];
+
+export const SIG_LOBBY_INTRO =
+  'El SIG de Etraining administra el diseño, desarrollo, implementación y el soporte de las soluciones integrales digitales para la educación: contenidos, experiencias de aprendizaje, plataformas SaaS y LMS, dotaciones tecnológicas y servicios a clientes institucionales del sector público o privado.';
