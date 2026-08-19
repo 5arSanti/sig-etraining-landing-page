@@ -3,8 +3,9 @@ import { describe, expect, it } from 'vitest';
 import App from './App';
 
 describe('App', () => {
-  it('renders the project name', () => {
+  it('shows academic chrome on home', () => {
     render(<App />);
-    expect(screen.getByText('Etraining SIG')).toBeInTheDocument();
+    const matches = screen.getAllByText(/Presentación SIG/i);
+    expect(matches.length).toBeGreaterThan(0);
   });
 });
