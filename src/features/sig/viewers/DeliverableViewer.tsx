@@ -3,6 +3,7 @@ import type { SigTopic } from '@/content/sig.manifest';
 import { ImageViewer } from './ImageViewer';
 import { PdfViewer } from './PdfViewer';
 import { PlaceholderState } from './PlaceholderState';
+import { XlsxViewer } from './XlsxViewer';
 
 export function DeliverableViewer({ topic }: { topic: SigTopic }) {
   switch (topic.kind) {
@@ -23,7 +24,9 @@ export function DeliverableViewer({ topic }: { topic: SigTopic }) {
         />
       );
     case 'xlsx':
-      return <div data-testid="xlsx-stub">Matriz RACI</div>;
+      return (
+        <XlsxViewer src={topic.files[0] ?? ''} downloadHref={topic.files[0] ?? ''} />
+      );
     case 'placeholder':
       return <PlaceholderState />;
     default:

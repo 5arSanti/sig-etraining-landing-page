@@ -1,5 +1,5 @@
-import { render, screen } from '@testing-library/react';
-import { describe, expect, it } from 'vitest';
+import { render, screen, waitFor } from '@testing-library/react';
+import { describe, expect, it, vi, beforeEach, afterEach } from 'vitest';
 import type { SigTopic } from '@/content/sig.manifest';
 import { DeliverableViewer } from './DeliverableViewer';
 
@@ -50,5 +50,31 @@ describe('DeliverableViewer', () => {
     );
     expect(screen.getByText('Este tema se publicará aquí.')).toBeInTheDocument();
     expect(screen.getByText('Contenido en construcción')).toBeInTheDocument();
+  });
+
+  it('shows error and download link when xlsx fails to load', async () => {
+    const originalFetch = global.fetch;
+    global.fetch = vi.fn(() => Promise.reject(new Error('Network error')));
+
+    render(
+      <DeliverableViewer
+        topic={topic({
+          kind: 'xlsx',
+          title: 'Matriz RACI',
+          files: ['/sig/raci/matriz.xlsx'],
+        })}
+      />,
+    );
+
+    await waitFor(() => {
+      expect(screen.getByText('No se pudo leer el Excel.')).toBeInTheDocument();
+    });
+
+    expect(screen.getByRole('link', { name: /descargar/i })).toHaveAttribute(
+      'href',
+      '/sig/raci/matriz.xlsx',
+    );
+
+    global.fetch = originalFetch;
   });
 });
