@@ -1,7 +1,7 @@
 # Design spec: landing Etraining + presentación SIG
 
 Date: 2026-08-18  
-Status: approved in conversation; waiting for spec review before the implementation plan.
+Status: approved. Implementation plan: `docs/superpowers/plans/2026-08-18-etraining-sig-landing.md`.
 
 ## 1. Purpose
 
