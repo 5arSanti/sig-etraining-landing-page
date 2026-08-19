@@ -42,6 +42,7 @@ export function RaciGrid({ sheets }: RaciGridProps) {
         <div className="flex flex-wrap gap-2">
           {sheets.map((sheet, index) => (
             <button
+              type="button"
               key={sheet.name}
               onClick={() => setActiveSheetIndex(index)}
               className={`rounded-lg px-4 py-2 text-sm font-medium transition-colors ${

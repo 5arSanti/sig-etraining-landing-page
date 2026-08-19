@@ -1,15 +1,31 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { DownloadLink } from './DownloadLink';
 
 export function ImageViewer(props: { src: string; alt: string; downloadHref: string }) {
   const [isEnlarged, setIsEnlarged] = useState(false);
+
+  useEffect(() => {
+    if (!isEnlarged) {
+      return;
+    }
+
+    function handleKeyDown(event: KeyboardEvent) {
+      if (event.key === 'Escape') {
+        setIsEnlarged(false);
+      }
+    }
+
+    document.addEventListener('keydown', handleKeyDown);
+    return () => document.removeEventListener('keydown', handleKeyDown);
+  }, [isEnlarged]);
 
   return (
     <div className="flex flex-col gap-4">
       <div className="relative">
         <img src={props.src} alt={props.alt} className="w-full" />
         <button
-          onClick={() => setIsEnlarged(!isEnlarged)}
+          type="button"
+          onClick={() => setIsEnlarged(true)}
           className="mt-2 rounded border border-black/20 bg-white px-4 py-2 text-sm font-medium text-black hover:bg-black/5"
         >
           Ver grande
