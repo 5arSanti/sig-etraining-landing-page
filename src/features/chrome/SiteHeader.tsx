@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { routes } from '@/app/routes';
+import { assetUrl } from '@/lib/assetUrl';
 
 const links = [
   { to: routes.home, label: 'Inicio', end: true },
@@ -16,7 +17,7 @@ export function SiteHeader() {
     <header className="sticky top-0 z-40 border-b border-brand-plum/10 bg-white/95 text-brand-plum-ink backdrop-blur-sm">
       <div className="flex items-center justify-between gap-4 px-4 py-3">
         <NavLink to={routes.home} className="flex shrink-0 items-center gap-2" onClick={() => setOpen(false)}>
-          <img src="/brand/logo-etraining.webp" alt="Etraining" className="h-8 w-auto" />
+          <img src={assetUrl('/brand/logo-etraining.webp')} alt="Etraining" className="h-8 w-auto" />
         </NavLink>
 
         <nav aria-label="Principal" className="hidden items-center gap-x-5 text-sm font-medium md:flex">

@@ -8,6 +8,17 @@ Landing académica en React + TypeScript. Home y Nosotros reconstruyen la marca 
 - `npm run dev` — http://localhost:5173
 - `npm test`
 - `npm run build`
+- `npm run preview` — vista previa del build (incluye el `base` de GitHub Pages)
+
+## Despliegue (GitHub Pages)
+
+Cada push a `main` ejecuta `.github/workflows/deploy-pages.yml`: test → build → deploy.
+
+URL esperada:
+
+https://5arsanti.github.io/sig-etraining-landing-page/
+
+En el repo: **Settings → Pages → Build and deployment → Source: GitHub Actions**.
 
 ## Recorrido
 

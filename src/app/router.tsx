@@ -6,15 +6,20 @@ import { NosotrosPage } from '@/features/company/NosotrosPage';
 import { SigLobbyPage } from '@/features/sig/SigLobbyPage';
 import { SigRoomPage } from '@/features/sig/SigRoomPage';
 
-export const router = createBrowserRouter([
-  {
-    path: routes.home,
-    element: <Layout />,
-    children: [
-      { index: true, element: <HomePage /> },
-      { path: 'nosotros', element: <NosotrosPage /> },
-      { path: 'sig', element: <SigLobbyPage /> },
-      { path: 'sig/:slug', element: <SigRoomPage /> },
-    ],
-  },
-]);
+const basename = import.meta.env.BASE_URL.replace(/\/$/, '') || undefined;
+
+export const router = createBrowserRouter(
+  [
+    {
+      path: routes.home,
+      element: <Layout />,
+      children: [
+        { index: true, element: <HomePage /> },
+        { path: 'nosotros', element: <NosotrosPage /> },
+        { path: 'sig', element: <SigLobbyPage /> },
+        { path: 'sig/:slug', element: <SigRoomPage /> },
+      ],
+    },
+  ],
+  { basename },
+);

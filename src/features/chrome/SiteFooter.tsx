@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { GROUP_LABEL, TEAM } from '@/content/team';
 import { businessLines } from '@/content/company';
 import { routes } from '@/app/routes';
+import { assetUrl } from '@/lib/assetUrl';
 
 const social = [
   { label: 'Instagram', href: 'https://www.instagram.com/' },
@@ -33,7 +34,7 @@ export function SiteFooter() {
       <div className="mx-auto grid max-w-6xl gap-10 px-4 py-14 md:grid-cols-2 lg:grid-cols-4">
         <div className="space-y-3">
           <img
-            src="/brand/logo-etraining.webp"
+            src={assetUrl('/brand/logo-etraining.webp')}
             alt="Etraining"
             className="h-8 w-auto brightness-0 invert"
           />

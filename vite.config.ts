@@ -7,7 +7,11 @@ import { defineConfig } from 'vite';
 
 const __dirname = fileURLToPath(new URL('.', import.meta.url));
 
-export default defineConfig({
+/** Project Pages URL: https://5arSanti.github.io/sig-etraining-landing-page/ */
+const PAGES_BASE = '/sig-etraining-landing-page/';
+
+export default defineConfig(({ command }) => ({
+  base: command === 'build' ? PAGES_BASE : '/',
   plugins: [react(), tailwindcss()],
   resolve: {
     alias: {
@@ -19,4 +23,4 @@ export default defineConfig({
     setupFiles: './src/test/setup.ts',
     globals: true,
   },
-});
+}));
