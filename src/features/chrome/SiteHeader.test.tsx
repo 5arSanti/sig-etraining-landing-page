@@ -1,21 +1,32 @@
-import { render, screen } from '@testing-library/react';
+import { render, screen, within } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import { MemoryRouter } from 'react-router-dom';
 import { describe, expect, it } from 'vitest';
 import { SiteHeader } from './SiteHeader';
 
 describe('SiteHeader', () => {
-  it('exposes the four nav destinations', () => {
+  it('exposes the four nav destinations', async () => {
+    const user = userEvent.setup();
     render(
       <MemoryRouter>
         <SiteHeader />
       </MemoryRouter>,
     );
 
-    expect(screen.getByRole('link', { name: 'Inicio' })).toHaveAttribute('href', '/');
-    expect(screen.getByRole('link', { name: 'Nosotros' })).toHaveAttribute('href', '/nosotros');
+    await user.click(screen.getByRole('button', { name: 'Abrir menú' }));
+    const mobileNav = screen.getByRole('navigation', { name: 'Principal móvil' });
+
+    expect(within(mobileNav).getByRole('link', { name: 'Inicio' })).toHaveAttribute('href', '/');
+    expect(within(mobileNav).getByRole('link', { name: 'Nosotros' })).toHaveAttribute(
+      'href',
+      '/nosotros',
+    );
     expect(
-      screen.getByRole('link', { name: 'Sistema Integrado de Gestión' }),
+      within(mobileNav).getByRole('link', { name: 'Sistema Integrado de Gestión' }),
     ).toHaveAttribute('href', '/sig');
-    expect(screen.getByRole('link', { name: 'Contacto' })).toHaveAttribute('href', '/#contacto');
+    expect(within(mobileNav).getByRole('link', { name: 'Contacto' })).toHaveAttribute(
+      'href',
+      '/#contacto',
+    );
   });
 });

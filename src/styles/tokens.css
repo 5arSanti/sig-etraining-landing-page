@@ -1,19 +1,49 @@
 @theme {
-  --color-brand-orange: #e87c1e;
+  /* Official Etraining identity (etraining.co + brand captures) */
+  --color-brand-orange: #f7941d;
+  --color-brand-orange-deep: #e87c1e;
+  --color-brand-amber: #ffcb05;
+  --color-brand-plum: #5f2157;
+  --color-brand-plum-deep: #400a3e;
+  --color-brand-plum-ink: #330033;
+  --color-brand-plum-footer: #4a1539;
   --color-brand-charcoal: #2d231e;
-  --color-brand-amber: #ffc225;
-  --color-brand-dark: #111111;
-  --color-brand-cream: #f7f4ef;
+  --color-brand-dark: #400a3e;
+  --color-brand-cream: #fff8f0;
+  --color-brand-muted: #7a5a72;
   --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
+  --radius-panel: 1.75rem;
+  --radius-card: 1.5rem;
+  --radius-pill: 9999px;
 }
 
 html {
   font-family: var(--font-sans);
-  color: var(--color-brand-charcoal);
+  color: var(--color-brand-plum-ink);
   background: #ffffff;
+}
+
+::selection {
+  background: color-mix(in srgb, var(--color-brand-orange) 35%, white);
+  color: var(--color-brand-plum-ink);
 }
 
 :focus-visible {
   outline: 2px solid var(--color-brand-orange);
   outline-offset: 2px;
+}
+
+@keyframes et-fade-up {
+  from {
+    opacity: 0.72;
+    transform: translateY(0.75rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.et-reveal {
+  animation: et-fade-up 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
 }

@@ -13,38 +13,38 @@ interface RoomChromeProps {
 export function RoomChrome({ title, position, total, prevSlug, nextSlug }: RoomChromeProps) {
   return (
     <div className="mb-6">
-      <div className="mb-2 flex items-center justify-between">
-        <h1 className="text-3xl font-bold text-gray-900">{title}</h1>
+      <div className="mb-2 flex items-center justify-between gap-4">
+        <h1 className="text-3xl font-extrabold text-brand-plum-ink">{title}</h1>
         {position !== null && (
-          <span className="text-sm text-gray-600">
+          <span className="shrink-0 rounded-[var(--radius-pill)] bg-brand-cream px-3 py-1 text-sm font-semibold text-brand-plum">
             {position} / {total}
           </span>
         )}
       </div>
-      <div className="flex gap-4 text-sm">
+      <div className="flex flex-wrap gap-3 text-sm font-medium">
         {prevSlug ? (
           <Link
             to={routes.sigTopic(prevSlug)}
-            className="text-blue-600 hover:text-blue-700 hover:underline"
+            className="text-brand-orange hover:text-brand-orange-deep hover:underline"
           >
             Anterior
           </Link>
         ) : (
-          <span className="text-gray-400">Anterior</span>
+          <span className="text-brand-muted/50">Anterior</span>
         )}
-        <span className="text-gray-400">|</span>
+        <span className="text-brand-muted/40">|</span>
         {nextSlug ? (
           <Link
             to={routes.sigTopic(nextSlug)}
-            className="text-blue-600 hover:text-blue-700 hover:underline"
+            className="text-brand-orange hover:text-brand-orange-deep hover:underline"
           >
             Siguiente
           </Link>
         ) : (
-          <span className="text-gray-400">Siguiente</span>
+          <span className="text-brand-muted/50">Siguiente</span>
         )}
-        <span className="text-gray-400">|</span>
-        <Link to={routes.sig} className="text-blue-600 hover:text-blue-700 hover:underline">
+        <span className="text-brand-muted/40">|</span>
+        <Link to={routes.sig} className="text-brand-orange hover:text-brand-orange-deep hover:underline">
           Índice
         </Link>
       </div>

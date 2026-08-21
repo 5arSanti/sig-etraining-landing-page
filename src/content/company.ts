@@ -11,8 +11,12 @@ export const tenure = {
 };
 
 export const essence = {
-  heading: 'Nuestra esencia',
+  heading: 'Nuestra esencia:',
   body: 'Pasión por la innovación educativa.',
+  cta: 'Conoce más',
+  /** Official CDN assets from etraining.co (hotlinked; local download blocked by CDN). */
+  mediaSrc: 'https://etraining.co/wp-content/uploads/2026/02/ARN_1.webp',
+  backdropSrc: 'https://etraining.co/wp-content/uploads/2025/10/fondo-2-animacion.webp',
 };
 
 export const whoTeaser = {
@@ -28,24 +32,31 @@ export const businessLines = [
   {
     title: 'Integrador de servicios educativos',
     body: 'Digitalizamos tu ecosistema de formación presencial y virtual',
+    imageSrc: 'https://etraining.co/wp-content/uploads/2026/02/ISE.webp',
   },
   {
     title: 'Diseño de experiencias de aprendizaje',
     body: 'Potenciamos el talento con ecosistemas digitales',
+    imageSrc: 'https://etraining.co/wp-content/uploads/2026/02/DEE.webp',
   },
   {
     title: 'STEAM e innovación educativa',
     body: 'Transformamos la educación uniendo creatividad y tecnología.',
+    imageSrc: 'https://etraining.co/wp-content/uploads/2026/02/PAM.webp',
   },
   {
     title: 'Analítica de datos, BI y modelos predictivos',
     body: 'Convertimos datos complejos en decisiones inteligentes con BI, analítica avanzada y modelos predictivos',
+    imageSrc: 'https://etraining.co/wp-content/uploads/2026/02/Analitica.webp',
   },
   {
     title: 'Desarrollo de software a la medida',
     body: 'Creamos soluciones digitales escalables y centradas en el usuario.',
+    imageSrc: 'https://etraining.co/wp-content/uploads/2026/02/TIC-foto.webp',
   },
 ] as const;
+
+export const businessLinesHeading = 'Nuestras líneas de negocio';
 
 export const cloudAlliances = ['Azure', 'AWS', 'Oracle', 'Google Cloud'] as const;
 export const houseBrands = ['Emotions', 'Enventors', 'Enséñame'] as const;
@@ -101,7 +112,8 @@ export const contact = {
     'Edificio Link 760',
     '110231 – Colombia',
   ],
-  phone: '+57 310 2129861',
+  phone: 'PBX: +57 310 2129861',
   email: 'comunicaciones@etraining.edu.co',
   hours: 'Lun – Vie · 8:00 AM – 6:00 PM',
+  phoneHref: '+573102129861',
 };

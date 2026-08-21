@@ -69,7 +69,7 @@ Must not:
 
 ## Brand Commitments
 
-Name: Etraining (also E-Training S.A.S. in legal texts). Visual authority: https://etraining.co/ and `assets/logo-etraining.webp`.
+Name: Etraining (also E-Training S.A.S. in legal texts). Visual authority: https://etraining.co/ and `public/brand/logo-etraining.webp`, plus the official plum/orange/amber system (deep plum surfaces, vibrant orange CTAs, amber accents).
 
 Voice: institutional, pedagogical, Colombian Spanish. Claims only from the public site (misión, propósito, five business lines, alliances, public case facts).
 

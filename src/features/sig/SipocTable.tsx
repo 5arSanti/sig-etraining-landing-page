@@ -2,43 +2,33 @@ import type { SipocRow } from '@/content/sig.manifest';
 
 export function SipocTable({ rows }: { rows: readonly SipocRow[] }) {
   return (
-    <div className="overflow-x-auto">
-      <table className="min-w-full border-collapse border border-gray-300">
+    <div className="overflow-x-auto rounded-[var(--radius-card)] border border-brand-plum/15">
+      <table className="min-w-full border-collapse">
         <thead>
-          <tr className="bg-gray-100">
-            <th className="border border-gray-300 px-4 py-2 text-left text-sm font-semibold text-gray-900">
-              Proveedor
-            </th>
-            <th className="border border-gray-300 px-4 py-2 text-left text-sm font-semibold text-gray-900">
-              Entradas
-            </th>
-            <th className="border border-gray-300 px-4 py-2 text-left text-sm font-semibold text-gray-900">
-              Proceso
-            </th>
-            <th className="border border-gray-300 px-4 py-2 text-left text-sm font-semibold text-gray-900">
-              Salida
-            </th>
-            <th className="border border-gray-300 px-4 py-2 text-left text-sm font-semibold text-gray-900">
-              Cliente
-            </th>
+          <tr className="bg-brand-plum text-left text-white">
+            <th className="px-4 py-2 text-sm font-semibold">Proveedor</th>
+            <th className="px-4 py-2 text-sm font-semibold">Entradas</th>
+            <th className="px-4 py-2 text-sm font-semibold">Proceso</th>
+            <th className="px-4 py-2 text-sm font-semibold">Salida</th>
+            <th className="px-4 py-2 text-sm font-semibold">Cliente</th>
           </tr>
         </thead>
         <tbody>
-          {rows.map((row, index) => (
-            <tr key={index} className="hover:bg-gray-50">
-              <td className="border border-gray-300 px-4 py-2 text-sm text-gray-700">
+          {rows.map((row) => (
+            <tr key={`${row.provider}-${row.process}`} className="odd:bg-white even:bg-brand-cream">
+              <td className="border-t border-brand-plum/10 px-4 py-2 text-sm text-brand-plum-ink">
                 {row.provider}
               </td>
-              <td className="border border-gray-300 px-4 py-2 text-sm text-gray-700">
+              <td className="border-t border-brand-plum/10 px-4 py-2 text-sm text-brand-plum-ink">
                 {row.input}
               </td>
-              <td className="border border-gray-300 px-4 py-2 text-sm text-gray-700">
+              <td className="border-t border-brand-plum/10 px-4 py-2 text-sm text-brand-plum-ink">
                 {row.process}
               </td>
-              <td className="border border-gray-300 px-4 py-2 text-sm text-gray-700">
+              <td className="border-t border-brand-plum/10 px-4 py-2 text-sm text-brand-plum-ink">
                 {row.output}
               </td>
-              <td className="border border-gray-300 px-4 py-2 text-sm text-gray-700">
+              <td className="border-t border-brand-plum/10 px-4 py-2 text-sm text-brand-plum-ink">
                 {row.customer}
               </td>
             </tr>

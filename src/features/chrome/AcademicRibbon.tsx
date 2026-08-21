@@ -6,11 +6,16 @@ export function AcademicRibbon() {
   const names = TEAM.map((member) => member.name).join(' · ');
 
   return (
-    <div className="bg-brand-dark text-white text-sm leading-snug px-4 py-2">
-      <Link to={routes.sig} className="underline-offset-2 hover:underline">
+    <div className="bg-brand-plum-ink text-white text-sm leading-snug px-4 py-2.5 border-b border-brand-orange/40">
+      <Link
+        to={routes.sig}
+        className="font-semibold text-brand-amber underline-offset-2 hover:underline"
+      >
         Presentación SIG · {GROUP_LABEL}
       </Link>
-      <span className="block sm:inline sm:before:content-['—'] sm:before:mx-2">{names}</span>
+      <span className="block text-white/85 sm:inline sm:before:content-['—'] sm:before:mx-2">
+        {names}
+      </span>
     </div>
   );
 }

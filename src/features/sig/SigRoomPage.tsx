@@ -24,7 +24,7 @@ export function SigRoomPage() {
   const displayPosition = position !== -1 ? position + 1 : null;
 
   return (
-    <div className="container mx-auto px-4 py-8">
+    <div className="mx-auto max-w-6xl px-4 py-10 md:py-12">
       <RoomChrome
         title={topic.title}
         position={displayPosition}
@@ -34,7 +34,7 @@ export function SigRoomPage() {
       />
       <div className="grid gap-8 lg:grid-cols-2">
         <div>
-          <div className="mb-6 whitespace-pre-line text-gray-700">{topic.body}</div>
+          <div className="mb-6 whitespace-pre-line text-brand-plum-ink/85">{topic.body}</div>
           {topic.sipocRows && <SipocTable rows={topic.sipocRows} />}
         </div>
         <div>
