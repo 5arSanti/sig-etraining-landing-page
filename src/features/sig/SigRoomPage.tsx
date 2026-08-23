@@ -1,10 +1,14 @@
-import { useParams } from 'react-router-dom';
-import { getAdjacentSlug, getReadyTopics, getTopicBySlug } from '@/content/sig.navigation';
-import { DeliverableViewer } from './viewers/DeliverableViewer';
-import { RoomChrome } from './RoomChrome';
-import { SigNotFound } from './SigNotFound';
-import { SipocTable } from './SipocTable';
-import { useSigKeyboardNav } from './useSigKeyboardNav';
+import { useParams } from "react-router-dom";
+import {
+  getAdjacentSlug,
+  getReadyTopics,
+  getTopicBySlug,
+} from "@/content/sig.navigation";
+import { DeliverableViewer } from "./viewers/DeliverableViewer";
+import { RoomChrome } from "./RoomChrome";
+import { SigNotFound } from "./SigNotFound";
+import { SipocTable } from "./SipocTable";
+import { useSigKeyboardNav } from "./useSigKeyboardNav";
 
 export function SigRoomPage() {
   const { slug } = useParams<{ slug: string }>();
@@ -14,8 +18,8 @@ export function SigRoomPage() {
     return <SigNotFound />;
   }
 
-  const prevSlug = getAdjacentSlug(topic.slug, 'prev');
-  const nextSlug = getAdjacentSlug(topic.slug, 'next');
+  const prevSlug = getAdjacentSlug(topic.slug, "prev");
+  const nextSlug = getAdjacentSlug(topic.slug, "next");
 
   useSigKeyboardNav(prevSlug, nextSlug);
 
@@ -24,7 +28,7 @@ export function SigRoomPage() {
   const displayPosition = position !== -1 ? position + 1 : null;
 
   return (
-    <div className="mx-auto max-w-6xl px-4 py-10 md:py-12">
+    <div className="mx-auto px-20 py-10 md:py-12">
       <RoomChrome
         title={topic.title}
         position={displayPosition}
@@ -32,14 +36,21 @@ export function SigRoomPage() {
         prevSlug={prevSlug}
         nextSlug={nextSlug}
       />
-      <div className="grid gap-8 lg:grid-cols-2">
-        <div>
-          <div className="mb-6 whitespace-pre-line text-brand-plum-ink/85">{topic.body}</div>
-          {topic.sipocRows && <SipocTable rows={topic.sipocRows} />}
+
+      <div className="space-y-10">
+        <div className="space-y-6">
+          <div className="whitespace-pre-line text-lg leading-relaxed text-brand-plum-ink/85">
+            {topic.body}
+          </div>
+          {topic.sipocRows ? <SipocTable rows={topic.sipocRows} /> : null}
         </div>
-        <div>
+
+        <section
+          className="w-full min-w-0 border-t border-brand-plum/10 pt-8"
+          aria-label="Entregable adjunto"
+        >
           <DeliverableViewer topic={topic} />
-        </div>
+        </section>
       </div>
     </div>
   );

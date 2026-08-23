@@ -8,6 +8,10 @@ export function useSigKeyboardNav(prev: SigSlug | null, next: SigSlug | null) {
 
   useEffect(() => {
     function handleKeydown(event: KeyboardEvent) {
+      if (document.querySelector('[role="dialog"][aria-modal="true"]')) {
+        return;
+      }
+
       const target = event.target as HTMLElement;
       if (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA') {
         return;
