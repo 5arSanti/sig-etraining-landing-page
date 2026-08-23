@@ -13,8 +13,8 @@ describe('SIG_TOPICS', () => {
       'politica-sig',
       'infografia',
     ]);
-    expect(SIG_TOPICS.filter((topic) => topic.kind === 'placeholder')).toHaveLength(2);
-    expect(SIG_TOPICS.filter((topic) => topic.kind !== 'placeholder')).toHaveLength(5);
+    expect(SIG_TOPICS.filter((topic) => topic.kind === 'placeholder')).toHaveLength(1);
+    expect(SIG_TOPICS.filter((topic) => topic.kind !== 'placeholder')).toHaveLength(6);
     expect(SIG_TOPICS[0]?.kind).toBe('image');
     expect(SIG_TOPICS[0]?.sipocRows).toHaveLength(3);
     expect(SIG_TOPICS[1]?.kind).toBe('pdf');

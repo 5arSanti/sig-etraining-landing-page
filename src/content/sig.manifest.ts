@@ -110,10 +110,10 @@ export const SIG_TOPICS: readonly SigTopic[] = [
     slug: 'infografia',
     number: 7,
     title: 'Infografía del SIG',
-    summary: 'Infografía del SIG.',
-    body: 'Este tema se publicará aquí.',
-    kind: 'placeholder',
-    files: [],
+    summary: 'Resumen visual de Etraining y el alcance del SIG.',
+    body: 'Infografía institucional del Grupo 2: identidad de Etraining, líneas de negocio, casos de impacto y alcance del Sistema Integrado de Gestión. La imagen es el entregable visual; léala como mapa rápido antes de entrar a los otros temas del SIG.',
+    kind: 'image',
+    files: ['/sig/infografia/5-infografia.png'],
   },
 ];
 

@@ -15,7 +15,7 @@ describe('SigLobbyPage', () => {
     for (const topic of SIG_TOPICS) {
       expect(screen.getByText(topic.title)).toBeInTheDocument();
     }
-    expect(screen.getAllByText('Contenido en construcción')).toHaveLength(2);
+    expect(screen.getAllByText('Contenido en construcción')).toHaveLength(1);
     expect(screen.getByRole('link', { name: /Entradas y salidas/i })).toHaveAttribute(
       'href',
       '/sig/entradas-salidas',

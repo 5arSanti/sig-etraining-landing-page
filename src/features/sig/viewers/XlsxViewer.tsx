@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { parseRaciWorkbook, type RaciSheet } from '../raci/parseRaciWorkbook';
+import { parseRaciWorkbook, type ParsedRaciWorkbook } from '../raci/parseRaciWorkbook';
 import { RaciGrid } from '../raci/RaciGrid';
 import { DownloadLink } from './DownloadLink';
 
@@ -11,7 +11,7 @@ interface XlsxViewerProps {
 type ViewerState =
   | { status: 'loading' }
   | { status: 'error' }
-  | { status: 'ready'; sheets: RaciSheet[] };
+  | { status: 'ready'; workbook: ParsedRaciWorkbook };
 
 export function XlsxViewer({ src, downloadHref }: XlsxViewerProps) {
   const [state, setState] = useState<ViewerState>({ status: 'loading' });
@@ -27,8 +27,8 @@ export function XlsxViewer({ src, downloadHref }: XlsxViewerProps) {
         return response.arrayBuffer();
       })
       .then((buffer) => {
-        const sheets = parseRaciWorkbook(buffer);
-        setState({ status: 'ready', sheets });
+        const workbook = parseRaciWorkbook(buffer);
+        setState({ status: 'ready', workbook });
       })
       .catch(() => {
         setState({ status: 'error' });
@@ -56,7 +56,7 @@ export function XlsxViewer({ src, downloadHref }: XlsxViewerProps) {
 
   return (
     <div className="space-y-4">
-      <RaciGrid sheets={state.sheets} />
+      <RaciGrid workbook={state.workbook} />
       <DownloadLink href={downloadHref} />
     </div>
   );
