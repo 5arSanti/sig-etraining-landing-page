@@ -5,7 +5,7 @@ import { describe, expect, it } from 'vitest';
 import { SiteHeader } from './SiteHeader';
 
 describe('SiteHeader', () => {
-  it('exposes the four nav destinations', async () => {
+  it('exposes the three nav destinations', async () => {
     const user = userEvent.setup();
     render(
       <MemoryRouter>
@@ -24,9 +24,6 @@ describe('SiteHeader', () => {
     expect(
       within(mobileNav).getByRole('link', { name: 'Sistema Integrado de Gestión' }),
     ).toHaveAttribute('href', '/sig');
-    expect(within(mobileNav).getByRole('link', { name: 'Contacto' })).toHaveAttribute(
-      'href',
-      '/#contacto',
-    );
+    expect(within(mobileNav).queryByRole('link', { name: 'Contacto' })).not.toBeInTheDocument();
   });
 });

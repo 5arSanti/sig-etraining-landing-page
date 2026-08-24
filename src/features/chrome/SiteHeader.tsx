@@ -7,7 +7,6 @@ const links = [
   { to: routes.home, label: 'Inicio', end: true },
   { to: routes.nosotros, label: 'Nosotros', end: true },
   { to: routes.sig, label: 'Sistema Integrado de Gestión', end: false },
-  { to: routes.contacto, label: 'Contacto', end: true },
 ] as const;
 
 export function SiteHeader() {
