@@ -1,4 +1,4 @@
-export type DeliverableKind = 'image' | 'pdf' | 'xlsx' | 'placeholder';
+export type DeliverableKind = 'image' | 'pdf' | 'xlsx' | 'text' | 'placeholder';
 
 export type SigSlug =
   | 'entradas-salidas'
@@ -25,6 +25,8 @@ export type SigTopic = {
   body: string;
   kind: DeliverableKind;
   files: string[];
+  /** Formal text deliverable (e.g. Política del SIG). Shown instead of a file viewer. */
+  textContent?: string;
   sipocRows?: readonly SipocRow[];
 };
 
@@ -101,10 +103,12 @@ export const SIG_TOPICS: readonly SigTopic[] = [
     slug: 'politica-sig',
     number: 6,
     title: 'Política del SIG',
-    summary: 'Política del Sistema Integrado de Gestión.',
-    body: 'Este tema se publicará aquí.',
-    kind: 'placeholder',
+    summary: 'Compromiso de la Alta Dirección con el Sistema Integrado de Gestión.',
+    body: 'La Política del SIG es el compromiso público de Etraining S.A.S. con la calidad del servicio, el cumplimiento normativo, la mejora continua, el talento humano, la seguridad y salud en el trabajo y la responsabilidad ambiental. No hay adjunto: el texto siguiente es el entregable.',
+    kind: 'text',
     files: [],
+    textContent:
+      'En Etraining SAS nos comprometemos a satisfacer los requisitos y expectativas de nuestros clientes, ofreciendo productos y servicios de calidad que cumplan con los requisitos legales y normativos aplicables. Promovemos la mejora continua de nuestro Sistema Integrado de Gestión mediante el establecimiento y seguimiento de objetivos medibles. Contamos con talento humano competente y gestionamos nuestros procesos con enfoque basado en riesgos. Protegemos la seguridad y salud de nuestros colaboradores y actuamos de manera responsable con el medio ambiente. La Alta Dirección asigna los recursos necesarios y comunica esta política a todos los niveles de la organización.',
   },
   {
     slug: 'infografia',

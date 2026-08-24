@@ -47,7 +47,7 @@ export function SigRoomPage() {
 
         <section
           className="w-full min-w-0 border-t border-brand-plum/10 pt-8"
-          aria-label="Entregable adjunto"
+          aria-label={topic.kind === 'text' ? 'Documento del tema' : 'Entregable adjunto'}
         >
           <DeliverableViewer topic={topic} />
         </section>

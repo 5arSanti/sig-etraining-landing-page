@@ -45,11 +45,31 @@ describe('DeliverableViewer', () => {
   it('shows the construction empty state for placeholders', () => {
     render(
       <DeliverableViewer
-        topic={topic({ kind: 'placeholder', title: 'Política SIG', files: [] })}
+        topic={topic({ kind: 'placeholder', title: 'Tema futuro', files: [] })}
       />,
     );
     expect(screen.getByText('Este tema se publicará aquí.')).toBeInTheDocument();
     expect(screen.getByText('Contenido en construcción')).toBeInTheDocument();
+  });
+
+  it('renders the política text document without a download link', () => {
+    render(
+      <DeliverableViewer
+        topic={topic({
+          kind: 'text',
+          title: 'Política del SIG',
+          slug: 'politica-sig',
+          files: [],
+          textContent:
+            'En Etraining SAS nos comprometemos a satisfacer los requisitos y expectativas de nuestros clientes.',
+        })}
+      />,
+    );
+
+    expect(
+      screen.getByText(/En Etraining SAS nos comprometemos a satisfacer/i),
+    ).toBeInTheDocument();
+    expect(screen.queryByRole('link', { name: /descargar/i })).not.toBeInTheDocument();
   });
 
   it('shows error and download link when xlsx fails to load', async () => {

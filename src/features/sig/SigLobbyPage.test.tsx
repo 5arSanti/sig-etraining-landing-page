@@ -5,7 +5,7 @@ import { SIG_TOPICS } from '@/content/sig.manifest';
 import { SigLobbyPage } from './SigLobbyPage';
 
 describe('SigLobbyPage', () => {
-  it('renders seven topic cards and marks placeholders as under construction', () => {
+  it('renders seven ready topic cards without construction labels', () => {
     render(
       <MemoryRouter>
         <SigLobbyPage />
@@ -15,10 +15,14 @@ describe('SigLobbyPage', () => {
     for (const topic of SIG_TOPICS) {
       expect(screen.getByText(topic.title)).toBeInTheDocument();
     }
-    expect(screen.getAllByText('Contenido en construcción')).toHaveLength(1);
+    expect(screen.queryByText('Contenido en construcción')).not.toBeInTheDocument();
     expect(screen.getByRole('link', { name: /Entradas y salidas/i })).toHaveAttribute(
       'href',
       '/sig/entradas-salidas',
+    );
+    expect(screen.getByRole('link', { name: /Política del SIG/i })).toHaveAttribute(
+      'href',
+      '/sig/politica-sig',
     );
   });
 });

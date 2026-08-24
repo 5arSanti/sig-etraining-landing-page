@@ -19,7 +19,7 @@ export function TopicCard({ topic }: { topic: SigTopic }) {
       <p className="mb-4 text-sm text-brand-muted">{topic.summary}</p>
       <div className="flex items-center justify-between">
         <span className="text-sm font-medium text-brand-orange group-hover:text-brand-orange-deep">
-          Ver entregable
+          {topic.kind === 'text' ? 'Ver documento' : 'Ver entregable'}
         </span>
         {isPlaceholder && (
           <span className="text-xs font-medium text-brand-plum">Contenido en construcción</span>
