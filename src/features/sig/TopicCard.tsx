@@ -16,6 +16,11 @@ export function TopicCard({ topic }: { topic: SigTopic }) {
         </span>
         <h3 className="text-lg font-semibold text-brand-plum-ink">{topic.title}</h3>
       </div>
+      {topic.isoTag ? (
+        <p className="mb-3 text-xs font-semibold uppercase tracking-wide text-brand-orange">
+          {topic.isoTag}
+        </p>
+      ) : null}
       <p className="mb-4 text-sm text-brand-muted">{topic.summary}</p>
       <div className="flex items-center justify-between">
         <span className="text-sm font-medium text-brand-orange group-hover:text-brand-orange-deep">

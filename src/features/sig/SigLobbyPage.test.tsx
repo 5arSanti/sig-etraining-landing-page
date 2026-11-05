@@ -5,7 +5,7 @@ import { SIG_TOPICS } from '@/content/sig.manifest';
 import { SigLobbyPage } from './SigLobbyPage';
 
 describe('SigLobbyPage', () => {
-  it('renders seven ready topic cards without construction labels', () => {
+  it('renders fourteen topic cards and three construction labels', () => {
     render(
       <MemoryRouter>
         <SigLobbyPage />
@@ -15,14 +15,14 @@ describe('SigLobbyPage', () => {
     for (const topic of SIG_TOPICS) {
       expect(screen.getByText(topic.title)).toBeInTheDocument();
     }
-    expect(screen.queryByText('Contenido en construcción')).not.toBeInTheDocument();
-    expect(screen.getByRole('link', { name: /Entradas y salidas/i })).toHaveAttribute(
+    expect(screen.getAllByText('Contenido en construcción')).toHaveLength(3);
+    expect(screen.getByText('ISO 14001')).toBeInTheDocument();
+    expect(screen.getByText('ISO 45001')).toBeInTheDocument();
+    expect(screen.getByText('ISO 27001')).toBeInTheDocument();
+    expect(screen.getByText('ISO 9001')).toBeInTheDocument();
+    expect(screen.getByRole('link', { name: /Control operacional/i })).toHaveAttribute(
       'href',
-      '/sig/entradas-salidas',
-    );
-    expect(screen.getByRole('link', { name: /Política del SIG/i })).toHaveAttribute(
-      'href',
-      '/sig/politica-sig',
+      '/sig/control-operacional',
     );
   });
 });
