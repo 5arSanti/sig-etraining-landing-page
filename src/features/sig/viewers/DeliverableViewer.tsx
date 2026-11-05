@@ -41,7 +41,9 @@ export function DeliverableViewer({ topic }: { topic: SigTopic }) {
         />
       );
     case 'placeholder':
-      return <PlaceholderState />;
+      return (
+        <PlaceholderState title={topic.title} owner={topic.owner} scope={topic.scope} />
+      );
     default:
       return assertNever(topic.kind);
   }

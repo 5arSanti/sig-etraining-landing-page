@@ -42,14 +42,25 @@ describe('DeliverableViewer', () => {
     );
   });
 
-  it('shows the construction empty state for placeholders', () => {
+  it('shows owner, scope, and the construction empty state for placeholders', () => {
     render(
       <DeliverableViewer
-        topic={topic({ kind: 'placeholder', title: 'Tema futuro', files: [] })}
+        topic={topic({
+          kind: 'placeholder',
+          title: 'Control operacional',
+          slug: 'control-operacional',
+          files: [],
+          owner: 'Rebeca',
+          scope: 'Cinco procesos y tres controles por proceso.',
+        })}
       />,
     );
+    expect(screen.getByText('Control operacional')).toBeInTheDocument();
+    expect(screen.getByText('Rebeca')).toBeInTheDocument();
+    expect(screen.getByText('Cinco procesos y tres controles por proceso.')).toBeInTheDocument();
     expect(screen.getByText('Este tema se publicará aquí.')).toBeInTheDocument();
     expect(screen.getByText('Contenido en construcción')).toBeInTheDocument();
+    expect(screen.queryByRole('link', { name: /descargar/i })).not.toBeInTheDocument();
   });
 
   it('renders the política text document without a download link', () => {
