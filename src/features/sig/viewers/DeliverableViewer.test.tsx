@@ -72,6 +72,26 @@ describe('DeliverableViewer', () => {
     expect(screen.queryByRole('link', { name: /descargar/i })).not.toBeInTheDocument();
   });
 
+  it('does not show the RACI legend for a spreadsheet topic', async () => {
+    const originalFetch = global.fetch;
+    global.fetch = vi.fn(() => Promise.reject(new Error('Network error')));
+    render(
+      <DeliverableViewer
+        topic={topic({
+          kind: 'spreadsheet',
+          title: 'Riesgos de calidad',
+          slug: 'riesgos-calidad',
+          files: ['/sig/riesgos-calidad/11-riesgos-calidad.xlsx'],
+        })}
+      />,
+    );
+    await waitFor(() => {
+      expect(screen.getByText('No se pudo leer el Excel.')).toBeInTheDocument();
+    });
+    expect(screen.queryByText('Leyenda RACI')).not.toBeInTheDocument();
+    global.fetch = originalFetch;
+  });
+
   it('shows error and download link when xlsx fails to load', async () => {
     const originalFetch = global.fetch;
     global.fetch = vi.fn(() => Promise.reject(new Error('Network error')));

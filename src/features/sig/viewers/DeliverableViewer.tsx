@@ -4,6 +4,7 @@ import type { SigTopic } from '@/content/sig.manifest';
 import { ImageViewer } from './ImageViewer';
 import { PdfViewer } from './PdfViewer';
 import { PlaceholderState } from './PlaceholderState';
+import { SpreadsheetViewer } from './SpreadsheetViewer';
 import { TextDocument } from './TextDocument';
 import { XlsxViewer } from './XlsxViewer';
 
@@ -29,6 +30,8 @@ export function DeliverableViewer({ topic }: { topic: SigTopic }) {
       );
     case 'xlsx':
       return <XlsxViewer src={file} downloadHref={file} />;
+    case 'spreadsheet':
+      return <SpreadsheetViewer src={file} downloadHref={file} />;
     case 'text':
       return (
         <TextDocument
