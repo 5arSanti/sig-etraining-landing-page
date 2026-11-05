@@ -13,6 +13,13 @@ describe('HomePage', () => {
     );
 
     expect(screen.getByText('22 años')).toBeInTheDocument();
+    const video = screen.getByTitle('Video de esencia de Etraining');
+    expect(video.tagName).toBe('IFRAME');
+    expect(video).toHaveAttribute('src', expect.stringContaining('dzgA7FLmvsA'));
+    expect(screen.getByRole('link', { name: /ver en youtube/i })).toHaveAttribute(
+      'href',
+      'https://www.youtube.com/watch?v=dzgA7FLmvsA',
+    );
     expect(screen.getByRole('link', { name: 'Ver el SIG' })).toHaveAttribute('href', '/sig');
     for (const line of businessLines) {
       expect(screen.getByText(line.title)).toBeInTheDocument();

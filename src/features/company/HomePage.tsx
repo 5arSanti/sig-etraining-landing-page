@@ -62,33 +62,35 @@ export function HomePage() {
           <h2 className="mb-2 text-3xl font-bold md:text-4xl">{essence.heading}</h2>
           <p className="mb-8 text-lg text-white/95 md:text-xl">{essence.body}</p>
 
-          <div className="relative mx-auto mb-10 max-w-3xl rounded-[1.25rem] bg-brand-plum-deep px-6 py-10 shadow-[0_10px_30px_rgba(64,10,62,0.35)]">
+          <div className="relative mx-auto mb-10 max-w-3xl overflow-hidden rounded-[1.25rem] bg-brand-plum-deep p-4 shadow-[0_10px_30px_rgba(64,10,62,0.35)] md:p-6">
             <span
-              className="absolute left-[18%] top-1/2 h-16 w-16 -translate-y-1/2 rounded-full bg-brand-plum opacity-80"
+              className="pointer-events-none absolute left-[8%] top-6 h-16 w-16 rounded-full bg-brand-plum opacity-80"
               aria-hidden="true"
             />
             <span
-              className="absolute right-[14%] top-1/2 h-28 w-28 -translate-y-1/2 rounded-full bg-brand-amber"
+              className="pointer-events-none absolute bottom-8 right-[6%] h-28 w-28 rounded-full bg-brand-amber/80"
               aria-hidden="true"
             />
-            <div className="relative mx-auto h-48 w-48 overflow-hidden rounded-full ring-4 ring-white/20 md:h-56 md:w-56">
-              <img
-                src={essence.mediaSrc}
-                alt="Comunidad educativa usando tecnología con Etraining"
-                className="h-full w-full object-cover"
+            <div className="relative aspect-video overflow-hidden rounded-xl bg-black">
+              <iframe
+                title={essence.embedTitle}
+                src={`https://www.youtube.com/embed/${essence.videoId}?rel=0`}
+                className="h-full w-full"
                 loading="lazy"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
               />
-              <span
-                className="pointer-events-none absolute inset-0 flex items-center justify-center bg-brand-plum-deep/25"
-                aria-hidden="true"
-              >
-                <span className="flex h-14 w-14 items-center justify-center rounded-full border-2 border-white/90 bg-white/15 text-white backdrop-blur-[1px]">
-                  <svg viewBox="0 0 24 24" className="ml-0.5 h-7 w-7 fill-current" aria-hidden="true">
-                    <path d="M8 5.5v13l11-6.5L8 5.5Z" />
-                  </svg>
-                </span>
-              </span>
             </div>
+            <p className="relative mt-4">
+              <a
+                href={essence.watchUrl}
+                target="_blank"
+                rel="noreferrer"
+                className="text-sm font-semibold text-brand-amber underline-offset-2 hover:underline"
+              >
+                Ver en YouTube
+              </a>
+            </p>
           </div>
 
           <Link

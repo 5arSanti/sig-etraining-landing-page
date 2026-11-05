@@ -14,9 +14,9 @@ export const essence = {
   heading: 'Nuestra esencia:',
   body: 'Pasión por la innovación educativa.',
   cta: 'Conoce más',
-  /** Official CDN assets from etraining.co (hotlinked; local download blocked by CDN). */
-  mediaSrc: 'https://etraining.co/wp-content/uploads/2026/02/ARN_1.webp',
-  backdropSrc: 'https://etraining.co/wp-content/uploads/2025/10/fondo-2-animacion.webp',
+  videoId: 'dzgA7FLmvsA',
+  watchUrl: 'https://www.youtube.com/watch?v=dzgA7FLmvsA',
+  embedTitle: 'Video de esencia de Etraining',
 };
 
 export const whoTeaser = {
