@@ -1,4 +1,4 @@
-export type DeliverableKind = 'image' | 'pdf' | 'xlsx' | 'text' | 'placeholder';
+export type DeliverableKind = 'image' | 'pdf' | 'xlsx' | 'spreadsheet' | 'text' | 'placeholder';
 
 export type SigSlug =
   | 'entradas-salidas'
@@ -7,7 +7,14 @@ export type SigSlug =
   | 'mapa-de-procesos'
   | 'matriz-raci'
   | 'politica-sig'
-  | 'infografia';
+  | 'infografia'
+  | 'aspectos-impactos'
+  | 'matriz-vpir'
+  | 'riesgos-seguridad-informacion'
+  | 'riesgos-calidad'
+  | 'control-operacional'
+  | 'seguimiento-medicion'
+  | 'emergencias';
 
 export type SipocRow = {
   provider: string;
@@ -28,6 +35,9 @@ export type SigTopic = {
   /** Formal text deliverable (e.g. Política del SIG). Shown instead of a file viewer. */
   textContent?: string;
   sipocRows?: readonly SipocRow[];
+  isoTag?: string;
+  owner?: string;
+  scope?: string;
 };
 
 export const SIG_TOPICS: readonly SigTopic[] = [
@@ -118,6 +128,85 @@ export const SIG_TOPICS: readonly SigTopic[] = [
     body: 'Infografía institucional del Grupo 2: identidad de Etraining, líneas de negocio, casos de impacto y alcance del Sistema Integrado de Gestión. La imagen es el entregable visual; léala como mapa rápido antes de entrar a los otros temas del SIG.',
     kind: 'image',
     files: ['/sig/infografia/5-infografia.png'],
+  },
+  {
+    slug: 'aspectos-impactos',
+    number: 8,
+    title: 'Matriz de aspectos e impactos',
+    summary: 'Cinco procesos de Etraining y su impacto ambiental.',
+    isoTag: 'ISO 14001',
+    body: 'La matriz identifica aspectos e impactos ambientales de cinco procesos. Léala de izquierda a derecha: actividad, aspecto, impacto, medio afectado y control sugerido. (1) Gestión de infraestructura tecnológica / soporte TI interno: RAEE al disponer equipos obsoletos; suelo y agua; gestor autorizado. (2) Logística de dotación de laboratorios STEAM: bus de 30 pasajeros; aire y GEI; mantenimiento, revisión de gases y rutas. (3) Gestión de infraestructura tecnológica: racks on-premise; energía; virtualización y monitoreo. (4) STEAM e innovación educativa: residuo de impresión 3D; suelo; segregación y reciclaje autorizado. (5) Desarrollo de software a la medida: Azure y GCP; energía indirecta; auto-scaling, apagado de ambientes ociosos y proveedores con energía renovable. El PDF es el entregable; no se reconstruye la tabla en HTML.',
+    kind: 'pdf',
+    files: ['/sig/aspectos-impactos/8-matriz-aspectos-impactos.pdf'],
+  },
+  {
+    slug: 'matriz-vpir',
+    number: 9,
+    title: 'Matriz VPIR',
+    summary: 'Valoración de peligros y riesgos (GTC 45) sobre las mismas actividades.',
+    isoTag: 'ISO 45001',
+    body: 'La VPIR valora peligros de SST con la metodología GTC 45, sobre las actividades de la matriz ambiental. Las columnas ND, NE, NP, NC y NR construyen el nivel de riesgo; «no aceptable» obliga a las medidas de intervención del PDF. Cuatro valoraciones: manejo de RAEE (químico, NR 300, II; control específico), bus STEAM (accidente de tránsito, NR 1800, I; PESV, límite de horas de conducción e inspección preoperacional), racks y UPS on-premise (eléctrico, NR 400, II; LOTO, RETIE y detección de incendio) e impresión 3D (químico y físico, NR 150, II; extracción HEPA/carbón, PLA y guantes térmicos). El PDF es la evidencia; no se transcribe la grilla numérica.',
+    kind: 'pdf',
+    files: ['/sig/matriz-vpir/9-matriz-vpir.pdf'],
+  },
+  {
+    slug: 'riesgos-seguridad-informacion',
+    number: 10,
+    title: 'Riesgos de seguridad de la información',
+    summary: 'Cuatro riesgos operativos sobre contratos, datos y Google Drive.',
+    isoTag: 'ISO 27001',
+    body: 'El entregable cubre cuatro riesgos de la operación diaria: acceso no autorizado, envío incorrecto de información sensible, pérdida o modificación no autorizada de documentos, y mala gestión de permisos en Google Drive. Las consecuencias tocan contratos, datos de clientes y carpetas por departamento. Los controles propuestos son acceso por roles con MFA, clasificación Pública / Interna / Confidencial / Reservada, versionado y respaldos, y revisión periódica de permisos. El PDF es el entregable.',
+    kind: 'pdf',
+    files: ['/sig/riesgos-seguridad-informacion/10-riesgos-seguridad-informacion.pdf'],
+  },
+  {
+    slug: 'riesgos-calidad',
+    number: 11,
+    title: 'Riesgos de calidad',
+    summary: 'Cinco actividades de PMO y auditoría con su control.',
+    isoTag: 'ISO 9001',
+    body: 'La hoja cubre revisión por fase, registro de hallazgos, acciones correctivas y preventivas, uso de plantillas institucionales y reportes de auditoría. El control insiste en un checklist único por fase, numeración consecutiva, responsables y fechas, versionado centralizado de formatos e independencia del rol de calidad frente al equipo ejecutor. El Excel es el entregable; se muestra como tabla, no como matriz RACI.',
+    kind: 'spreadsheet',
+    files: ['/sig/riesgos-calidad/11-riesgos-calidad.xlsx'],
+  },
+  {
+    slug: 'control-operacional',
+    number: 12,
+    title: 'Control operacional',
+    summary: 'Cinco procesos y tres controles por proceso (SST, SI, ambiente y calidad).',
+    isoTag: '9001 / 14001 / 45001 / 27001',
+    owner: 'Rebeca',
+    scope:
+      'Elegir cinco procesos de Etraining y asignar tres controles por proceso (SST, seguridad de la información, ambientales y calidad).',
+    body: 'Este tema se publicará aquí.',
+    kind: 'placeholder',
+    files: [],
+  },
+  {
+    slug: 'seguimiento-medicion',
+    number: 13,
+    title: 'Seguimiento y medición',
+    summary: 'Doce indicadores con línea base y comparación.',
+    isoTag: '9001 / 14001 / 45001 / 27001',
+    owner: 'Dana, Mayra y Thomas',
+    scope:
+      'Definir doce indicadores (3 ambientales, 3 de SST, 3 de seguridad de la información y 3 de procesos) con línea base y comparación.',
+    body: 'Este tema se publicará aquí.',
+    kind: 'placeholder',
+    files: [],
+  },
+  {
+    slug: 'emergencias',
+    number: 14,
+    title: 'Emergencias',
+    summary: 'Cuatro eventos: antes, durante, después y procesos afectados.',
+    isoTag: '14001 / 45001',
+    owner: 'Nicolás',
+    scope:
+      'Cuatro desastres o eventos naturales, qué hacer antes, durante y después, y qué procesos se afectan.',
+    body: 'Este tema se publicará aquí.',
+    kind: 'placeholder',
+    files: [],
   },
 ];
 
