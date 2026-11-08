@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { createMemoryRouter, RouterProvider } from 'react-router-dom';
 import { describe, expect, it } from 'vitest';
@@ -50,6 +50,20 @@ describe('SigRoomPage', () => {
     renderRoom('/sig/seguimiento-medicion');
     expect(screen.getByText(/4 de 12 cumplen meta/i)).toBeInTheDocument();
     expect(screen.getByTitle('Seguimiento y medición')).toBeInTheDocument();
+  });
+
+  it('shows the emergency infographic and a second spreadsheet download', async () => {
+    renderRoom('/sig/emergencias');
+    expect(screen.getByRole('img', { name: /Emergencias/i })).toHaveAttribute(
+      'src',
+      '/sig/emergencias/14-impacto-riesgo.png',
+    );
+    await waitFor(() => {
+      const downloads = screen.getAllByRole('link', { name: /descargar/i });
+      expect(
+        downloads.some((link) => link.getAttribute('href')?.endsWith('14-matriz-desastres.xlsx')),
+      ).toBe(true);
+    });
   });
 
   it('goes to the next ready topic with ArrowRight', async () => {

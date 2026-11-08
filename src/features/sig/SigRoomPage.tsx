@@ -5,7 +5,10 @@ import {
   getReadyTopics,
   getTopicBySlug,
 } from "@/content/sig.navigation";
+import { assetUrl } from "@/lib/assetUrl";
+import { EmergencyBoard } from "./EmergencyBoard";
 import { DeliverableViewer } from "./viewers/DeliverableViewer";
+import { SpreadsheetViewer } from "./viewers/SpreadsheetViewer";
 import { IndicatorDashboard } from "./IndicatorDashboard";
 import { OperationalControlTable } from "./OperationalControlTable";
 import { RoomChrome } from "./RoomChrome";
@@ -50,6 +53,7 @@ export function SigRoomPage() {
             <OperationalControlTable rows={OPERATIONAL_CONTROLS} />
           ) : null}
           {topic.slug === "seguimiento-medicion" ? <IndicatorDashboard /> : null}
+          {topic.slug === "emergencias" ? <EmergencyBoard /> : null}
         </div>
 
         <section
@@ -57,6 +61,14 @@ export function SigRoomPage() {
           aria-label={topic.kind === 'text' ? 'Documento del tema' : 'Entregable adjunto'}
         >
           <DeliverableViewer topic={topic} />
+          {topic.files[1]?.endsWith(".xlsx") ? (
+            <div className="mt-8">
+              <SpreadsheetViewer
+                src={assetUrl(topic.files[1])}
+                downloadHref={assetUrl(topic.files[1])}
+              />
+            </div>
+          ) : null}
         </section>
       </div>
     </div>
