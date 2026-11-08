@@ -8,7 +8,11 @@ export function EmergencyBoard() {
   if (!selected) return null;
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-5">
+      <p className="max-w-3xl text-base leading-relaxed text-brand-plum-ink/85">
+        Cuatro eventos. Abra uno para ver el antes, durante y después, y los procesos que se
+        afectan.
+      </p>
       <div className="flex flex-wrap gap-2">
         {EMERGENCY_EVENTS.map((event) => (
           <button

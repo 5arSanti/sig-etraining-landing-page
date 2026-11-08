@@ -8,7 +8,7 @@ import {
 import { assetUrl } from "@/lib/assetUrl";
 import { EmergencyBoard } from "./EmergencyBoard";
 import { DeliverableViewer } from "./viewers/DeliverableViewer";
-import { SpreadsheetViewer } from "./viewers/SpreadsheetViewer";
+import { DownloadLink } from "./viewers/DownloadLink";
 import { IndicatorDashboard } from "./IndicatorDashboard";
 import { OperationalControlTable } from "./OperationalControlTable";
 import { RoomChrome } from "./RoomChrome";
@@ -32,9 +32,11 @@ export function SigRoomPage() {
   const readyTopics = getReadyTopics();
   const position = readyTopics.findIndex((t) => t.slug === topic.slug);
   const displayPosition = position !== -1 ? position + 1 : null;
+  const skipSpreadsheetPreview = topic.slug === "control-operacional";
+  const extraWorkbook = topic.files[1]?.endsWith(".xlsx") ? topic.files[1] : undefined;
 
   return (
-    <div className="mx-auto px-20 py-10 md:py-12">
+    <div className="mx-auto max-w-6xl px-4 py-10 md:px-8 md:py-12">
       <RoomChrome
         title={topic.title}
         position={displayPosition}
@@ -43,30 +45,29 @@ export function SigRoomPage() {
         nextSlug={nextSlug}
       />
 
-      <div className="space-y-10">
-        <div className="space-y-6">
-          <div className="whitespace-pre-line text-lg leading-relaxed text-brand-plum-ink/85">
-            {topic.body}
-          </div>
-          {topic.sipocRows ? <SipocTable rows={topic.sipocRows} /> : null}
-          {topic.slug === "control-operacional" ? (
-            <OperationalControlTable rows={OPERATIONAL_CONTROLS} />
-          ) : null}
-          {topic.slug === "seguimiento-medicion" ? <IndicatorDashboard /> : null}
-          {topic.slug === "emergencias" ? <EmergencyBoard /> : null}
+      <div className="space-y-12">
+        <div className="max-w-3xl whitespace-pre-line text-lg leading-relaxed text-brand-plum-ink/85">
+          {topic.body}
         </div>
+        {topic.sipocRows ? <SipocTable rows={topic.sipocRows} /> : null}
+        {topic.slug === "control-operacional" ? (
+          <OperationalControlTable rows={OPERATIONAL_CONTROLS} />
+        ) : null}
+        {topic.slug === "seguimiento-medicion" ? <IndicatorDashboard /> : null}
+        {topic.slug === "emergencias" ? <EmergencyBoard /> : null}
 
         <section
           className="w-full min-w-0 border-t border-brand-plum/10 pt-8"
-          aria-label={topic.kind === 'text' ? 'Documento del tema' : 'Entregable adjunto'}
+          aria-label={topic.kind === "text" ? "Documento del tema" : "Entregable adjunto"}
         >
-          <DeliverableViewer topic={topic} />
-          {topic.files[1]?.endsWith(".xlsx") ? (
-            <div className="mt-8">
-              <SpreadsheetViewer
-                src={assetUrl(topic.files[1])}
-                downloadHref={assetUrl(topic.files[1])}
-              />
+          {skipSpreadsheetPreview ? (
+            <DownloadLink href={assetUrl(topic.files[0] ?? "")}>Descargar Excel</DownloadLink>
+          ) : (
+            <DeliverableViewer topic={topic} />
+          )}
+          {extraWorkbook ? (
+            <div className="mt-6">
+              <DownloadLink href={assetUrl(extraWorkbook)}>Descargar matriz de desastres</DownloadLink>
             </div>
           ) : null}
         </section>

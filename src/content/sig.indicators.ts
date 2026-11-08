@@ -216,12 +216,78 @@ export const SIG_INDICATORS: SigIndicator[] = [
 export const INDICATOR_SUMMARY = {
   meetingTarget: SIG_INDICATORS.filter((item) => item.status === 'Cumple').length,
   total: SIG_INDICATORS.length,
+  meetingCodes: SIG_INDICATORS.filter((item) => item.status === 'Cumple').map((item) => item.code),
 };
 
 export const INDICATOR_FILTERS: { id: 'todos' | IndicatorComponent; label: string }[] = [
-  { id: 'todos', label: 'Todos' },
   { id: 'ambiental', label: 'Ambiental' },
   { id: 'sst', label: 'SST' },
   { id: 'informacion', label: 'Información' },
   { id: 'procesos', label: 'Procesos' },
+  { id: 'todos', label: 'Todos' },
+];
+
+export const INDICATOR_READ_GUIDE =
+  'Cada gráfica compara tres valores del informe: la línea base de septiembre (ciruela), el resultado de octubre (naranja) y la meta (ámbar). Cumple significa que octubre alcanzó la meta. Mejora, no cumple significa que el valor se movió en el sentido esperado, pero todavía no llega. La comparación es simulada: el 33,3 % es el porcentaje de metas logradas, no un nivel de certificación.';
+
+export type ActionPriority = 'Alta' | 'Media' | 'Sostenimiento';
+
+export type ActionPlanRow = {
+  priority: ActionPriority;
+  finding: string;
+  action: string;
+  owner: string;
+  deadline: string;
+};
+
+export const INDICATOR_ACTION_PLAN: ActionPlanRow[] = [
+  {
+    priority: 'Alta',
+    finding: 'Respaldos incompletos (I1)',
+    action: 'Alertas automáticas, revisar fallos y ensayar recuperación.',
+    owner: 'TI',
+    deadline: '30 días',
+  },
+  {
+    priority: 'Alta',
+    finding: 'Incidentes de información (I2)',
+    action: 'Análisis de causa y revisión de permisos y medidas preventivas.',
+    owner: 'TI / Seguridad',
+    deadline: '30 días',
+  },
+  {
+    priority: 'Alta',
+    finding: 'Inspecciones y formación SST (S1, S2)',
+    action: 'Reprogramar actividades faltantes y asegurar asistencia.',
+    owner: 'SST',
+    deadline: '30 días',
+  },
+  {
+    priority: 'Media',
+    finding: 'Energía y residuos (A1, A3)',
+    action: 'Campaña de ahorro, señalización y comprobación de separación.',
+    owner: 'Ambiental / Administración',
+    deadline: '60 días',
+  },
+  {
+    priority: 'Media',
+    finding: 'Programación de cursos (P2)',
+    action: 'Plan alterno para instructor, aula y conexión.',
+    owner: 'Coordinación académica',
+    deadline: '30 días',
+  },
+  {
+    priority: 'Media',
+    finding: 'Atención de solicitudes (P3)',
+    action: 'Tablero de vencimientos y responsables asignados.',
+    owner: 'Servicio al cliente',
+    deadline: '30 días',
+  },
+  {
+    priority: 'Sostenimiento',
+    finding: 'A2, S3, I3, P1 en meta',
+    action: 'Conservar controles y revisar su eficacia mensualmente.',
+    owner: 'Responsables de proceso',
+    deadline: 'Mensual',
+  },
 ];
