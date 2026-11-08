@@ -175,12 +175,9 @@ export const SIG_TOPICS: readonly SigTopic[] = [
     title: 'Control operacional',
     summary: 'Cinco procesos y tres controles por proceso (SST, SI, ambiente y calidad).',
     isoTag: '9001 / 14001 / 45001 / 27001',
-    owner: 'Rebeca',
-    scope:
-      'Elegir cinco procesos de Etraining y asignar tres controles por proceso (SST, seguridad de la información, ambientales y calidad).',
-    body: 'Este tema se publicará aquí.',
-    kind: 'placeholder',
-    files: [],
+    body: 'Cinco procesos de Etraining con tres controles cada uno, tomados de SST, seguridad de la información, ambiente y calidad (tres de esas cuatro familias por proceso). Léalo por proceso: tipo de control, control operacional y evidencia. Cita ISO 9001, 14001 y 45001 numeral 8.1, e ISO 27001 numeral 8.1. El Excel es el entregable; la tabla de esta sala es la ayuda de lectura.',
+    kind: 'spreadsheet',
+    files: ['/sig/control-operacional/12-control-operacional.xlsx'],
   },
   {
     slug: 'seguimiento-medicion',
@@ -188,25 +185,22 @@ export const SIG_TOPICS: readonly SigTopic[] = [
     title: 'Seguimiento y medición',
     summary: 'Doce indicadores con línea base y comparación.',
     isoTag: '9001 / 14001 / 45001 / 27001',
-    owner: 'Dana, Mayra y Thomas',
-    scope:
-      'Definir doce indicadores (3 ambientales, 3 de SST, 3 de seguridad de la información y 3 de procesos) con línea base y comparación.',
-    body: 'Este tema se publicará aquí.',
-    kind: 'placeholder',
-    files: [],
+    body: 'Doce indicadores (3 ambientales, 3 de SST, 3 de seguridad de la información y 3 de procesos) comparan la línea base de septiembre de 2026 con el resultado de octubre y la meta. La comparación del informe es simulada: 4 de 12 cumplen la meta (33,3 %). Eso no es un nivel de certificación. Cita ISO 9001, 14001, 45001 y 27001 numeral 9.1. El PDF es el entregable; el tablero de esta sala es la ayuda de lectura.',
+    kind: 'pdf',
+    files: ['/sig/seguimiento-medicion/13-informe-seguimiento-medicion.pdf'],
   },
   {
     slug: 'emergencias',
     number: 14,
     title: 'Emergencias',
     summary: 'Cuatro eventos: antes, durante, después y procesos afectados.',
-    isoTag: '14001 / 45001',
-    owner: 'Nicolás',
-    scope:
-      'Cuatro desastres o eventos naturales, qué hacer antes, durante y después, y qué procesos se afectan.',
-    body: 'Este tema se publicará aquí.',
-    kind: 'placeholder',
-    files: [],
+    isoTag: '14001 / 45001 / 27001',
+    body: 'Cuatro eventos (terremoto, inundación, deslizamiento y tormenta eléctrica) con qué hacer antes, durante y después en las áreas organizacional, ambiental, SST y seguridad de la información, y qué procesos se afectan. Cita ISO 14001 8.2 e ISO 45001 8.2, más continuidad de respaldos (27001) y continuidad operativa (9001). La infografía y el Excel son los entregables.',
+    kind: 'image',
+    files: [
+      '/sig/emergencias/14-impacto-riesgo.png',
+      '/sig/emergencias/14-matriz-desastres.xlsx',
+    ],
   },
 ];
 
