@@ -1,4 +1,4 @@
-import { Fragment, useMemo, useState } from 'react';
+import { Fragment, useLayoutEffect, useMemo, useRef, useState, type ReactNode } from 'react';
 import { Bar, BarChart, CartesianGrid, Legend, Tooltip, XAxis, YAxis } from 'recharts';
 import {
   INDICATOR_ACTION_PLAN,
@@ -30,33 +30,66 @@ function deltaLabel(row: SigIndicator): string {
   return `${sign}${delta} ${row.unit}`;
 }
 
+function useFigureWidth() {
+  const ref = useRef<HTMLDivElement>(null);
+  const [width, setWidth] = useState(960);
+
+  useLayoutEffect(() => {
+    const node = ref.current;
+    if (!node) return;
+
+    const update = () => setWidth(Math.max(node.clientWidth, 320));
+    update();
+
+    if (typeof ResizeObserver === 'undefined') return;
+    const observer = new ResizeObserver(update);
+    observer.observe(node);
+    return () => observer.disconnect();
+  }, []);
+
+  return { ref, width };
+}
+
 function ChartBlock({
   title,
   rows,
-  width,
   height,
 }: {
   title: string;
   rows: SigIndicator[];
-  width: number;
   height: number;
 }) {
+  const { ref, width } = useFigureWidth();
   if (rows.length === 0) return null;
+
   return (
-    <div className="overflow-x-auto">
-      <p className="mb-3 text-sm font-semibold text-brand-plum">{title}</p>
-      <BarChart width={width} height={height} data={rows}>
-        <CartesianGrid strokeDasharray="3 3" />
-        <XAxis dataKey="code" />
-        <YAxis />
-        <Tooltip />
-        <Legend />
-        <Bar dataKey="baseline" name="Línea base" fill="#5f2157" />
-        <Bar dataKey="result" name="Resultado" fill="#f7941d" />
-        <Bar dataKey="target" name="Meta" fill="#ffcb05" />
-      </BarChart>
-    </div>
+    <figure ref={ref} className="mx-auto w-full">
+      <figcaption className="mb-5 text-center text-base font-semibold text-brand-plum">{title}</figcaption>
+      <div className="flex justify-center">
+        <BarChart
+          width={width}
+          height={height}
+          data={rows}
+          margin={{ top: 8, right: 12, left: 0, bottom: 8 }}
+          barCategoryGap="22%"
+          barGap={8}
+        >
+          <CartesianGrid strokeDasharray="3 3" stroke="#ead9e4" />
+          <XAxis dataKey="code" tick={{ fill: '#5f2157', fontSize: 14, fontWeight: 600 }} />
+          <YAxis tick={{ fill: '#5f2157', fontSize: 12 }} width={48} />
+          <Tooltip />
+          <Legend wrapperStyle={{ paddingTop: 12 }} />
+          <Bar dataKey="baseline" name="Línea base" fill="#5f2157" />
+          <Bar dataKey="result" name="Resultado" fill="#f7941d" />
+          <Bar dataKey="target" name="Meta" fill="#ffcb05" />
+        </BarChart>
+      </div>
+    </figure>
   );
+}
+
+function ReportCopy({ children }: { children: ReactNode }) {
+  return <div className="mx-auto max-w-[68ch] text-pretty">{children}</div>;
 }
 
 export function IndicatorDashboard() {
@@ -78,62 +111,70 @@ export function IndicatorDashboard() {
   const meetingList = INDICATOR_SUMMARY.meetingCodes.join(', ');
 
   return (
-    <div className="space-y-12">
-      <section className="max-w-3xl space-y-3">
-        <h2 className="text-xl font-bold text-brand-plum-ink">Cómo leer estas gráficas</h2>
-        <p className="text-base leading-relaxed text-brand-plum-ink/85">{INDICATOR_READ_GUIDE}</p>
+    <article className="flex flex-col gap-16 md:gap-20">
+      <section>
+        <ReportCopy>
+          <h2 className="text-center text-2xl font-bold tracking-tight text-brand-plum-ink">
+            Cómo leer estas gráficas
+          </h2>
+          <p className="mt-5 text-lg leading-8 text-brand-plum-ink/90">{INDICATOR_READ_GUIDE}</p>
+        </ReportCopy>
       </section>
 
-      <section className="space-y-4">
-        <div className="max-w-3xl space-y-3">
-          <h2 className="text-xl font-bold text-brand-plum-ink">Balance de los resultados</h2>
-          <p className="text-lg font-semibold text-brand-plum-ink">
+      <section className="border-t border-brand-plum/10 pt-16 md:pt-20">
+        <ReportCopy>
+          <h2 className="text-center text-2xl font-bold tracking-tight text-brand-plum-ink">
+            Balance de los resultados
+          </h2>
+          <p className="mt-5 text-center text-2xl font-semibold text-brand-plum-ink">
             {INDICATOR_SUMMARY.meetingTarget} de {INDICATOR_SUMMARY.total} cumplen meta
           </p>
-          <p className="text-base leading-relaxed text-brand-plum-ink/85">
+          <p className="mt-4 text-lg leading-8 text-brand-plum-ink/90">
             Los doce indicadores avanzaron respecto de septiembre. Solo {meetingList} alcanzaron la
             meta. Cada componente queda en 1 de 3; el 33,3 % no describe el avance general de la
             empresa.
           </p>
-        </div>
-        <table className="max-w-xl text-left text-sm">
+        </ReportCopy>
+        <table className="mx-auto mt-10 w-full max-w-3xl text-left text-base">
           <thead>
             <tr className="border-b border-brand-plum/15 text-brand-plum">
-              <th className="py-2 pr-4 font-semibold">Componente</th>
-              <th className="py-2 pr-4 font-semibold">Cumplen</th>
-              <th className="py-2 font-semibold">Metas</th>
+              <th className="py-3 pr-6 font-semibold">Componente</th>
+              <th className="py-3 pr-6 font-semibold">Cumplen</th>
+              <th className="py-3 font-semibold">Metas</th>
             </tr>
           </thead>
           <tbody>
             {balance.map((row) => (
               <tr key={row.component} className="border-b border-brand-plum/10">
-                <td className="py-2 pr-4">{row.label}</td>
-                <td className="py-2 pr-4">
+                <td className="py-3.5 pr-6">{row.label}</td>
+                <td className="py-3.5 pr-6 tabular-nums">
                   {row.meeting} de {row.total}
                 </td>
-                <td className="py-2">33,3 %</td>
+                <td className="py-3.5 tabular-nums">33,3 %</td>
               </tr>
             ))}
             <tr className="font-semibold text-brand-plum-ink">
-              <td className="py-2 pr-4">Total</td>
-              <td className="py-2 pr-4">
+              <td className="py-3.5 pr-6">Total</td>
+              <td className="py-3.5 pr-6 tabular-nums">
                 {INDICATOR_SUMMARY.meetingTarget} de {INDICATOR_SUMMARY.total}
               </td>
-              <td className="py-2">33,3 %</td>
+              <td className="py-3.5 tabular-nums">33,3 %</td>
             </tr>
           </tbody>
         </table>
       </section>
 
-      <section className="space-y-5">
-        <div className="max-w-3xl space-y-3">
-          <h2 className="text-xl font-bold text-brand-plum-ink">Recorrido por componente</h2>
-          <p className="text-base leading-relaxed text-brand-plum-ink/85">
+      <section className="border-t border-brand-plum/10 pt-16 md:pt-20">
+        <ReportCopy>
+          <h2 className="text-center text-2xl font-bold tracking-tight text-brand-plum-ink">
+            Recorrido por componente
+          </h2>
+          <p className="mt-5 text-lg leading-8 text-brand-plum-ink/90">
             El informe agrupa tres indicadores por perspectiva. Empiece por ambiental, como el
             documento, y abra una fila para ver fórmula, interpretación y acción.
           </p>
-        </div>
-        <div className="flex flex-wrap gap-2">
+        </ReportCopy>
+        <div className="mt-8 flex flex-wrap justify-center gap-3">
           {INDICATOR_FILTERS.map((item) => (
             <button
               key={item.id}
@@ -142,7 +183,7 @@ export function IndicatorDashboard() {
                 setFilter(item.id);
                 setOpenCode(null);
               }}
-              className={`rounded-[var(--radius-pill)] px-3 py-1.5 text-sm font-semibold ${
+              className={`min-h-11 rounded-[var(--radius-pill)] px-4 py-2 text-sm font-semibold ${
                 filter === item.id
                   ? 'bg-brand-plum text-white'
                   : 'bg-white text-brand-plum ring-1 ring-brand-plum/20'
@@ -152,49 +193,44 @@ export function IndicatorDashboard() {
             </button>
           ))}
         </div>
-        {filter !== 'todos' ? (
-          <p className="text-sm text-brand-muted">{CHART_SENSE[filter]}</p>
-        ) : (
-          <p className="text-sm text-brand-muted">
-            Los porcentajes van juntos; I2 (incidentes) se grafica aparte porque es un conteo, no un
-            porcentaje.
-          </p>
-        )}
-        <ChartBlock
-          title={
-            filter === 'todos'
-              ? 'Porcentajes: línea base, octubre y meta'
-              : `${FILTER_LABEL[filter]}: línea base, octubre y meta`
-          }
-          rows={percentRows}
-          width={filter === 'todos' ? 720 : 520}
-          height={280}
-        />
-        <ChartBlock
-          title="Incidentes reportados (conteo)"
-          rows={countRows}
-          width={360}
-          height={240}
-        />
-        <div className="overflow-x-auto">
-          <table className="min-w-full text-left text-sm" aria-label="Indicadores del componente">
+        <p className="mx-auto mt-5 max-w-[68ch] text-center text-base leading-7 text-brand-muted">
+          {filter !== 'todos'
+            ? CHART_SENSE[filter]
+            : 'Los porcentajes van juntos; I2 (incidentes) se grafica aparte porque es un conteo, no un porcentaje.'}
+        </p>
+        <div className="mt-10">
+          <ChartBlock
+            title={
+              filter === 'todos'
+                ? 'Porcentajes: línea base, octubre y meta'
+                : `${FILTER_LABEL[filter]}: línea base, octubre y meta`
+            }
+            rows={percentRows}
+            height={400}
+          />
+        </div>
+        <div className="mt-12">
+          <ChartBlock title="Incidentes reportados (conteo)" rows={countRows} height={320} />
+        </div>
+        <div className="mt-12 overflow-x-auto">
+          <table className="min-w-full text-left text-base" aria-label="Indicadores del componente">
             <thead className="bg-brand-plum text-white">
               <tr>
-                <th className="px-3 py-2 font-semibold">Código</th>
-                <th className="px-3 py-2 font-semibold">Indicador</th>
-                <th className="px-3 py-2 font-semibold">Sep</th>
-                <th className="px-3 py-2 font-semibold">Oct</th>
-                <th className="px-3 py-2 font-semibold">Meta</th>
-                <th className="px-3 py-2 font-semibold">Δ</th>
-                <th className="px-3 py-2 font-semibold">Estado</th>
+                <th className="px-5 py-3.5 font-semibold">Código</th>
+                <th className="px-5 py-3.5 font-semibold">Indicador</th>
+                <th className="px-5 py-3.5 font-semibold">Sep</th>
+                <th className="px-5 py-3.5 font-semibold">Oct</th>
+                <th className="px-5 py-3.5 font-semibold">Meta</th>
+                <th className="px-5 py-3.5 font-semibold">Δ</th>
+                <th className="px-5 py-3.5 font-semibold">Estado</th>
               </tr>
             </thead>
             <tbody>
               {visible.map((row) => (
                 <Fragment key={row.code}>
                   <tr className="odd:bg-white even:bg-brand-cream/40">
-                    <td className="border-t border-brand-plum/10 px-3 py-2 font-semibold">{row.code}</td>
-                    <td className="border-t border-brand-plum/10 px-3 py-2">
+                    <td className="border-t border-brand-plum/10 px-5 py-3.5 font-semibold">{row.code}</td>
+                    <td className="border-t border-brand-plum/10 px-5 py-3.5">
                       <button
                         type="button"
                         className="text-left font-medium text-brand-plum hover:text-brand-orange"
@@ -203,18 +239,18 @@ export function IndicatorDashboard() {
                         {row.name}
                       </button>
                     </td>
-                    <td className="border-t border-brand-plum/10 px-3 py-2">
+                    <td className="border-t border-brand-plum/10 px-5 py-3.5 tabular-nums">
                       {row.baseline} {row.unit}
                     </td>
-                    <td className="border-t border-brand-plum/10 px-3 py-2">
+                    <td className="border-t border-brand-plum/10 px-5 py-3.5 tabular-nums">
                       {row.result} {row.unit}
                     </td>
-                    <td className="border-t border-brand-plum/10 px-3 py-2">
+                    <td className="border-t border-brand-plum/10 px-5 py-3.5 tabular-nums">
                       {row.target} {row.unit}
                     </td>
-                    <td className="border-t border-brand-plum/10 px-3 py-2">{deltaLabel(row)}</td>
+                    <td className="border-t border-brand-plum/10 px-5 py-3.5 tabular-nums">{deltaLabel(row)}</td>
                     <td
-                      className={`border-t border-brand-plum/10 px-3 py-2 font-medium ${
+                      className={`border-t border-brand-plum/10 px-5 py-3.5 font-medium ${
                         row.status === 'Cumple' ? 'text-emerald-800' : 'text-brand-orange'
                       }`}
                     >
@@ -223,20 +259,20 @@ export function IndicatorDashboard() {
                   </tr>
                   {openCode === row.code ? (
                     <tr>
-                      <td colSpan={7} className="bg-brand-cream px-4 py-3 text-sm text-brand-plum-ink/85">
+                      <td colSpan={7} className="bg-brand-cream px-6 py-5 text-base leading-7 text-brand-plum-ink/90">
                         <p>
                           <strong>Fórmula:</strong> {row.formula}
                         </p>
-                        <p>
+                        <p className="mt-2">
                           <strong>Fuente:</strong> {row.source}
                         </p>
-                        <p>
+                        <p className="mt-2">
                           <strong>Responsable:</strong> {row.owner}
                         </p>
-                        <p>
+                        <p className="mt-2">
                           <strong>Interpretación:</strong> {row.interpretation}
                         </p>
-                        <p>
+                        <p className="mt-2">
                           <strong>Acción:</strong> {row.action}
                         </p>
                       </td>
@@ -249,41 +285,41 @@ export function IndicatorDashboard() {
         </div>
       </section>
 
-      <section className="space-y-4">
-        <div className="max-w-3xl space-y-3">
-          <h2 className="text-xl font-bold text-brand-plum-ink">Plan de acción</h2>
-          <p className="text-base leading-relaxed text-brand-plum-ink/85">
+      <section className="border-t border-brand-plum/10 pt-16 md:pt-20">
+        <ReportCopy>
+          <h2 className="text-center text-2xl font-bold tracking-tight text-brand-plum-ink">Plan de acción</h2>
+          <p className="mt-5 text-lg leading-8 text-brand-plum-ink/90">
             El informe cierra con prioridades para la siguiente medición. Si un resultado sigue
             fuera de meta, hay que analizar la causa; no basta con repetir la misma actividad.
           </p>
-        </div>
-        <div className="overflow-x-auto">
-          <table className="min-w-full text-left text-sm" aria-label="Plan de acción">
+        </ReportCopy>
+        <div className="mt-10 overflow-x-auto">
+          <table className="min-w-full text-left text-base" aria-label="Plan de acción">
             <thead className="bg-brand-plum text-white">
               <tr>
-                <th className="px-3 py-2 font-semibold">Prioridad</th>
-                <th className="px-3 py-2 font-semibold">Hallazgo</th>
-                <th className="px-3 py-2 font-semibold">Acción</th>
-                <th className="px-3 py-2 font-semibold">Responsable</th>
-                <th className="px-3 py-2 font-semibold">Plazo</th>
+                <th className="px-5 py-3.5 font-semibold">Prioridad</th>
+                <th className="px-5 py-3.5 font-semibold">Hallazgo</th>
+                <th className="px-5 py-3.5 font-semibold">Acción</th>
+                <th className="px-5 py-3.5 font-semibold">Responsable</th>
+                <th className="px-5 py-3.5 font-semibold">Plazo</th>
               </tr>
             </thead>
             <tbody>
               {INDICATOR_ACTION_PLAN.map((row) => (
                 <tr key={row.finding} className="odd:bg-white even:bg-brand-cream/40">
-                  <td className="border-t border-brand-plum/10 px-3 py-2 font-medium text-brand-orange">
+                  <td className="border-t border-brand-plum/10 px-5 py-3.5 font-medium text-brand-orange">
                     {row.priority}
                   </td>
-                  <td className="border-t border-brand-plum/10 px-3 py-2">{row.finding}</td>
-                  <td className="border-t border-brand-plum/10 px-3 py-2">{row.action}</td>
-                  <td className="border-t border-brand-plum/10 px-3 py-2">{row.owner}</td>
-                  <td className="border-t border-brand-plum/10 px-3 py-2">{row.deadline}</td>
+                  <td className="border-t border-brand-plum/10 px-5 py-3.5">{row.finding}</td>
+                  <td className="border-t border-brand-plum/10 px-5 py-3.5">{row.action}</td>
+                  <td className="border-t border-brand-plum/10 px-5 py-3.5">{row.owner}</td>
+                  <td className="border-t border-brand-plum/10 px-5 py-3.5">{row.deadline}</td>
                 </tr>
               ))}
             </tbody>
           </table>
         </div>
       </section>
-    </div>
+    </article>
   );
 }

@@ -12,7 +12,7 @@ interface RoomChromeProps {
 
 export function RoomChrome({ title, position, total, prevSlug, nextSlug }: RoomChromeProps) {
   return (
-    <div className="mb-6">
+    <div className="mb-10">
       <div className="mb-2 flex items-center justify-between gap-4">
         <h1 className="text-3xl font-extrabold text-brand-plum-ink">{title}</h1>
         {position !== null && (
