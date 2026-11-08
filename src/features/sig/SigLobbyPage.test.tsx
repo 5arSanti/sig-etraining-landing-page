@@ -5,7 +5,7 @@ import { SIG_TOPICS } from '@/content/sig.manifest';
 import { SigLobbyPage } from './SigLobbyPage';
 
 describe('SigLobbyPage', () => {
-  it('renders fourteen topic cards and three construction labels', () => {
+  it('renders fourteen ready cards, the audit map, and no construction labels', () => {
     render(
       <MemoryRouter>
         <SigLobbyPage />
@@ -15,14 +15,15 @@ describe('SigLobbyPage', () => {
     for (const topic of SIG_TOPICS) {
       expect(screen.getByText(topic.title)).toBeInTheDocument();
     }
-    expect(screen.getAllByText('Contenido en construcción')).toHaveLength(3);
-    expect(screen.getByText('ISO 14001')).toBeInTheDocument();
-    expect(screen.getByText('ISO 45001')).toBeInTheDocument();
-    expect(screen.getByText('ISO 27001')).toBeInTheDocument();
-    expect(screen.getByText('ISO 9001')).toBeInTheDocument();
-    expect(screen.getByRole('link', { name: /Control operacional/i })).toHaveAttribute(
+    expect(screen.queryByText('Contenido en construcción')).not.toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: /Qué ver en auditoría/i })).toBeInTheDocument();
+    expect(screen.getByText(/no son una certificación/i)).toBeInTheDocument();
+    expect(screen.getByText(/9\.2/)).toBeInTheDocument();
+    const controlLinks = screen.getAllByRole('link', { name: /8\.1 Control operacional/i });
+    expect(controlLinks[0]).toHaveAttribute('href', '/sig/control-operacional');
+    expect(screen.getAllByRole('link', { name: /8\.2 Emergencias/i })[0]).toHaveAttribute(
       'href',
-      '/sig/control-operacional',
+      '/sig/emergencias',
     );
   });
 });
