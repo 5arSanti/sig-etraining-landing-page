@@ -46,6 +46,12 @@ describe('SigRoomPage', () => {
     );
   });
 
+  it('shows the indicator summary and the seguimiento PDF', () => {
+    renderRoom('/sig/seguimiento-medicion');
+    expect(screen.getByText(/4 de 12 cumplen meta/i)).toBeInTheDocument();
+    expect(screen.getByTitle('Seguimiento y medición')).toBeInTheDocument();
+  });
+
   it('goes to the next ready topic with ArrowRight', async () => {
     const user = userEvent.setup();
     renderRoom('/sig/entradas-salidas');

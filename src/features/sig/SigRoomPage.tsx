@@ -6,6 +6,7 @@ import {
   getTopicBySlug,
 } from "@/content/sig.navigation";
 import { DeliverableViewer } from "./viewers/DeliverableViewer";
+import { IndicatorDashboard } from "./IndicatorDashboard";
 import { OperationalControlTable } from "./OperationalControlTable";
 import { RoomChrome } from "./RoomChrome";
 import { SigNotFound } from "./SigNotFound";
@@ -48,6 +49,7 @@ export function SigRoomPage() {
           {topic.slug === "control-operacional" ? (
             <OperationalControlTable rows={OPERATIONAL_CONTROLS} />
           ) : null}
+          {topic.slug === "seguimiento-medicion" ? <IndicatorDashboard /> : null}
         </div>
 
         <section
