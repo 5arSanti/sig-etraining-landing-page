@@ -1,10 +1,12 @@
 import { useParams } from "react-router-dom";
+import { OPERATIONAL_CONTROLS } from "@/content/sig.controls";
 import {
   getAdjacentSlug,
   getReadyTopics,
   getTopicBySlug,
 } from "@/content/sig.navigation";
 import { DeliverableViewer } from "./viewers/DeliverableViewer";
+import { OperationalControlTable } from "./OperationalControlTable";
 import { RoomChrome } from "./RoomChrome";
 import { SigNotFound } from "./SigNotFound";
 import { SipocTable } from "./SipocTable";
@@ -43,6 +45,9 @@ export function SigRoomPage() {
             {topic.body}
           </div>
           {topic.sipocRows ? <SipocTable rows={topic.sipocRows} /> : null}
+          {topic.slug === "control-operacional" ? (
+            <OperationalControlTable rows={OPERATIONAL_CONTROLS} />
+          ) : null}
         </div>
 
         <section

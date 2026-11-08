@@ -37,6 +37,15 @@ describe('SigRoomPage', () => {
     expect(screen.getByRole('link', { name: /volver al SIG/i })).toHaveAttribute('href', '/sig');
   });
 
+  it('shows the control table and a spreadsheet download in control operacional', async () => {
+    renderRoom('/sig/control-operacional');
+    expect(screen.getByText(/LOTO/)).toBeInTheDocument();
+    expect(await screen.findByRole('link', { name: /descargar/i })).toHaveAttribute(
+      'href',
+      '/sig/control-operacional/12-control-operacional.xlsx',
+    );
+  });
+
   it('goes to the next ready topic with ArrowRight', async () => {
     const user = userEvent.setup();
     renderRoom('/sig/entradas-salidas');
